@@ -84,11 +84,6 @@ def df_to_X(df, print_updates=False):
 
     X.append(window)        
     X = np.array(X).astype(float)
-
-    if print_updates:
-        print(f'{df_clean['city'].iloc[1]} X: {X}')
-        print(X.shape)
-        print(X.dtype)
         
     return X
 
