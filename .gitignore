@@ -7,7 +7,6 @@ aqapp/bin/
 # Ignore compiled/binary files
 *.dylib
 *.so
-*.pkl
 
 # Ignore other large files
 __pycache__/
