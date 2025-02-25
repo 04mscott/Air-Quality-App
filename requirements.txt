@@ -1,0 +1,13 @@
+numpy
+pandas
+os
+time
+tensorflow
+scikit-learn
+plotly
+streamlit
+dotenv
+sqlalchemy
+joblib
+geopy
+requests
