@@ -20,8 +20,8 @@ def train_model(model, X_train, X_val, y_train, y_val, epochs=15):
 
 
 if __name__=='__main__':
-    TRAIN = True
-    TEST = True
+    TRAIN = False
+    TEST = False
 
     load_dotenv()
     api_key = os.getenv("API_KEY")
