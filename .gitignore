@@ -8,7 +8,6 @@ aqapp/bin/
 *.dylib
 *.so
 *.pkl
-*.keras
 
 # Ignore other large files
 __pycache__/
