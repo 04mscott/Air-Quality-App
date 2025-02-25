@@ -1,0 +1,14 @@
+.env
+# Ignore Python virtual environments
+venv/
+aqapp/lib/
+aqapp/bin/
+
+# Ignore compiled/binary files
+*.dylib
+*.so
+*.pkl
+*.keras
+
+# Ignore other large files
+__pycache__/
