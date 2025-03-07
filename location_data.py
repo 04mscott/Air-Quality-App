@@ -158,9 +158,9 @@ def save_current_data(data, cities):
     print('Data inserted successfully')
 
 if __name__=='__main__':
-    CURRENT = True
+    CURRENT = False
     HISTORIC = False
-    DATASET = False
+    DATASET = True
     SAVE_CURRENT = False
     STORAGE = False
     SCHEDULED = False
@@ -198,8 +198,8 @@ if __name__=='__main__':
             print(df.head(5))
             print(df.info)
     if DATASET:
-        start=1672549200
-        end=1740330000
+        end = int(time.time())
+        start = end - (3 * 365 * 24 * 60 * 60)
         save_initial_training_data(data, cities, start, end)
     if SAVE_CURRENT:
         save_current_data(data, cities)

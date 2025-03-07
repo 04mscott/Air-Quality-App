@@ -14,14 +14,14 @@ def train_test_split(X, y, test_size=0.15):
     return X[:train], X[train:val], X[val:], y[:train], y[train:val], y[val:]
 
 def train_model(model, X_train, X_val, y_train, y_val, epochs=15):
-    es = EarlyStopping(monitor='val_loss', mode='min', patience=5)
+    es = EarlyStopping(monitor='val_loss', mode='min', patience=10)
     cp = ModelCheckpoint('model.keras', save_best_only=True, save_freq='epoch')
     model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=epochs, callbacks=[cp, es])
 
 
 if __name__=='__main__':
-    TRAIN = False
-    TEST = False
+    TRAIN = True
+    TEST = True
 
     load_dotenv()
     api_key = os.getenv("API_KEY")
@@ -40,13 +40,13 @@ if __name__=='__main__':
         df = df.drop(columns=['id'])
     print('Data Successfully Loaded')
 
-    window_size = 24
+    window_size = 168
     X, y = df_to_X_y(df, window_size, TRAIN)
     X_train, X_val, X_test, y_train, y_val, y_test = train_test_split(X, y)
 
     if TRAIN:
         model = get_model(window_size)
-        train_model(model, X_train, X_val, y_train, y_val, 30)
+        train_model(model, X_train, X_val, y_train, y_val, epochs=100)
     if TEST:
         base_dir = os.path.dirname(os.path.abspath(__file__))
         model = load_model(os.path.join(base_dir, 'model.keras'))

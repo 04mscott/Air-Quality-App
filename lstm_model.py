@@ -6,7 +6,7 @@ from tensorflow.keras.optimizers import Adam
 
 def get_model(window_size, learning_rate=0.0001):
     model = Sequential()
-    model.add(InputLayer((window_size, 10)))
+    model.add(InputLayer((window_size, 14)))
 
     model.add(LSTM(64))
     model.add(Dense(32, 'relu'))
@@ -18,5 +18,5 @@ def get_model(window_size, learning_rate=0.0001):
     return model
 
 if __name__=='__main__':
-    model = get_model(12)
+    model = get_model(168)
     model.summary()

@@ -36,14 +36,16 @@ def predict_n(df, n):
 
 
 if __name__=='__main__':
-    city = 'College Park' # input('Enter City Name: ')
-    hours = 24 # input('How many hours do you want to predict? ')
-    df = get_current_air_quality(city, 24)
-    curr_time = int(df['time'].max()) + 3600
+    # city = input('Enter City Name: ')
+    city = 'New York'
+    # hours = int(input('How many hours do you want to predict? '))
+    hours = 24
+    df = get_current_air_quality(city, 168)
     X = df_to_X(df)
     #print(df)
-    prediction = predict_n(df, int(hours))
-    graph_dataframe(prediction)
+    prediction = predict_n(df, hours)
+    # graph_dataframe(prediction, hours)
+    print(prediction.iloc[-49:])
     #print(f'Prediction: {prediction}')
     
 

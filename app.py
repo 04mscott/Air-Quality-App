@@ -16,8 +16,11 @@ if city:
     pollutants_cb = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
     colors = ['#eb4034', '#e68439', '#e8c433', '#a6e32b', '#14e07a', '#1bc3e0', '#2154de', '#a827db']
 
-    df = predict_n(get_current_air_quality(city), 24)
-
+    df_current = get_current_air_quality(city)
+    # if df_current is not None:
+    df = predict_n(df_current, 168)
+    # if df is not None:
+    df = df.iloc[-49:]
     a, b, c, d, e, f, g, h = st.columns(8)
     columns = [a, b, c, d, e, f, g, h]
 

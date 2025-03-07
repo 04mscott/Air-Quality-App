@@ -2,7 +2,6 @@ import os
 import mysql
 import mysql.connector
 import requests
-import streamlit as st
 from dotenv import load_dotenv
 
 load_dotenv()

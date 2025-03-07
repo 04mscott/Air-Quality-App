@@ -19,10 +19,20 @@ def preprocess(df, TRAIN, print_updates=False):
     df_clean = df_clean.sort_values(by='time')
 
     df_clean['time'] = pd.to_datetime(df_clean['time'], unit='s')
+
     df_clean['hour'] = df_clean['time'].dt.hour
     df_clean['hour_sin'] = np.sin((2 * np.pi * df_clean['hour']) / 24)
     df_clean['hour_cos'] = np.cos((2 * np.pi * df_clean['hour']) / 24)
-    df_clean = df_clean.drop(columns=['time', 'hour'])
+
+    df_clean['day'] = df_clean['time'].dt.day
+    df_clean['day_sin'] = np.sin((2 * np.pi * df_clean['day']) / 365)
+    df_clean['day_cos'] = np.cos((2 * np.pi * df_clean['day']) / 365)
+
+    df_clean['month'] = df_clean['time'].dt.month
+    df_clean['month_sin'] = np.sin((2 * np.pi * df_clean['month']) / 12)
+    df_clean['month_cos'] = np.cos((2 * np.pi * df_clean['month']) / 12)
+    
+    df_clean = df_clean.drop(columns=['time', 'hour', 'day', 'month'])
 
     df_clean = df_clean.reset_index(drop=True)
     if print_updates:
@@ -56,12 +66,10 @@ def df_to_X_y(df, window_size, TRAIN=True, print_updates=False):
         for i in range(len(city_indices) - window_size):
             window = []
             for j in range(window_size):
-                window.append(df_np[city_indices[i+j], 1:11])
+                window.append(df_np[city_indices[i+j], 1:15])
             X.append(window)
             y.append(df_np[city_indices[i+window_size], 1:9])
-        if print_updates:
-            print(f'{city} X: {X}')
-            print(f'{city} y: {y}')
+
 
     X = np.array(X).astype(float)
     y = np.array(y).astype(float)
@@ -80,7 +88,7 @@ def df_to_X(df, print_updates=False):
 
     window = []
     for j in range(len(df_np)):
-        window.append(df_np[j, 1:11])
+        window.append(df_np[j, 1:15])
 
     X.append(window)        
     X = np.array(X).astype(float)
@@ -88,14 +96,17 @@ def df_to_X(df, print_updates=False):
     return X
 
 
-def graph_dataframe(df):
+def graph_dataframe(df, predicted_hours=24):
     df = df.reset_index()
-    time = pd.to_datetime(df['time'].iloc[-25])
+    time = pd.to_datetime(df['time'].iloc[-(predicted_hours + 1)])
+    df['time'] = pd.to_datetime(df['time']);
 
     fig = px.line(
         df,
-        x='time',
-        y=pollutants
+        x="time", 
+        y=pollutants, 
+        range_x=[df['time'].min(), df['time'].max()], 
+        labels={'time': 'Time', 'value': 'Concentration μg/m3'}
     )
 
     fig.add_vline(x=time)
