@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from lstm_model import get_model
 from sqlalchemy import create_engine
 from tensorflow.keras.models import load_model
-from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
+from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 
 def train_test_split(X, y, test_size=0.15):
     val = int(X.shape[0] * test_size)
@@ -13,10 +13,11 @@ def train_test_split(X, y, test_size=0.15):
     val += train
     return X[:train], X[train:val], X[val:], y[:train], y[train:val], y[val:]
 
-def train_model(model, X_train, X_val, y_train, y_val, epochs=15):
-    es = EarlyStopping(monitor='val_loss', mode='min', patience=10)
+def train_model(model, X_train, X_val, y_train, y_val, batch_size=32, epochs=15):
+    rlr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=5, min_lr=1e-6)
+    es = EarlyStopping(monitor='val_loss', mode='min', patience=15, restore_best_weights=True)
     cp = ModelCheckpoint('model.keras', save_best_only=True, save_freq='epoch')
-    model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=epochs, callbacks=[cp, es])
+    model.fit(X_train, y_train, validation_data=(X_val, y_val), batch_size=batch_size, epochs=epochs, callbacks=[cp, es, rlr])
 
 
 if __name__=='__main__':
@@ -40,13 +41,14 @@ if __name__=='__main__':
         df = df.drop(columns=['id'])
     print('Data Successfully Loaded')
 
-    window_size = 168
+    window_size = 72
+    batch_size = 64
     X, y = df_to_X_y(df, window_size, TRAIN)
     X_train, X_val, X_test, y_train, y_val, y_test = train_test_split(X, y)
 
     if TRAIN:
         model = get_model(window_size)
-        train_model(model, X_train, X_val, y_train, y_val, epochs=100)
+        train_model(model, X_train, X_val, y_train, y_val, batch_size=batch_size, epochs=100)
     if TEST:
         base_dir = os.path.dirname(os.path.abspath(__file__))
         model = load_model(os.path.join(base_dir, 'model.keras'))
