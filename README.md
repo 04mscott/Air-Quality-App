@@ -1,5 +1,3 @@
-[Return to Home](https://04mscott.github.io/)
-
 <center><h1>Air Quality App</h1></center>
 <center><h2>LSTM Prediction Application</h2></center>
 
@@ -27,6 +25,3 @@ This project implements an air quality prediction system using an LSTM (Long Sho
 + Web Development: Streamlit (framework for building the web app interface)
 + Cloud Computing: AWS (for hosting MySQL database and deployment)
 + Data Handling: Pandas, NumPy (for data preprocessing and manipulation)
-
----
-[Return to Home](https://04mscott.github.io/)

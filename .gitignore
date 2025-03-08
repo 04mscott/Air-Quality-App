@@ -1,8 +1,7 @@
 .env
 # Ignore Python virtual environments
 venv/
-aqapp/lib/
-aqapp/bin/
+aqapp
 
 # Ignore compiled/binary files
 *.dylib
@@ -10,3 +9,4 @@ aqapp/bin/
 
 # Ignore other large files
 __pycache__/
+.DS_Store
