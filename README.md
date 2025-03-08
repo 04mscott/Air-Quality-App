@@ -1,7 +1,7 @@
 <center><h1>Air Quality App</h1></center>
 <center><h2>LSTM Prediction Application</h2></center>
 
-<img src="assets/img/app_nyc.png" class="img-responsive" alt="">
+<img src="[/assets/img/app_example.png]" class="img-responsive" alt="">
 
 ## Overview:
 
