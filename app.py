@@ -9,7 +9,7 @@ from location_data import get_current_air_quality
 st.html("<h1 style='text-align: center; color: white;'>Air Quality Predictor</h1>")
 # st.title('Air Quality Predictor')
 
-city = st.text_input('Enter a City to Get Curret Air Quality')
+city = st.text_input('Enter a City to Get Current Air Quality')
 
 if city:
     pollutants = ['co', 'no', 'no2', 'o3', 'so2', 'pm2_5', 'pm10', 'nh3']
